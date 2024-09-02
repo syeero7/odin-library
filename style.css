@@ -57,6 +57,7 @@ button {
 #bookList {
   list-style: none;
   overflow: auto;
+  height: 90%;
 }
 
 dialog {
