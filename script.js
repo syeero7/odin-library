@@ -43,12 +43,14 @@ function displayBooks() {
     removeBtn.setAttribute("data-remove", "");
     const toggleBtn = document.createElement("button");
     toggleBtn.setAttribute("data-toggle", "");
+    const para = document.createElement("p");
+    const lineBreak = document.createElement("br");
 
-    listItem.textContent = `${book.title} by ${book.author}, ${book.pages} pages.`;
+    para.textContent = `${book.title} by ${book.author}, ${book.pages} pages.`;
     removeBtn.textContent = "Remove";
     toggleBtn.textContent = `${book.status ? "Read" : "Not read yet"}`;
 
-    listItem.append(toggleBtn, removeBtn);
+    listItem.append(para, lineBreak, toggleBtn, removeBtn);
     bookList.appendChild(listItem);
   });
 }
