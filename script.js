@@ -4,11 +4,7 @@ const dialog = document.querySelector("dialog");
 const closeBtn = dialog.querySelector("#close-btn");
 const form = dialog.querySelector("form");
 
-const myLibrary = [
-  { title: "borrow", author: "jim board", pages: 53, status: true },
-  { title: "zorro", author: "tom jest", pages: 22, status: false },
-  { title: "ages", author: "ice cold", pages: 33, status: true },
-];
+const myLibrary = [];
 
 newBookBtn.addEventListener("click", () => dialog.showModal());
 closeBtn.addEventListener("click", () => dialog.close());
