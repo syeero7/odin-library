@@ -18,6 +18,8 @@ bookList.addEventListener("click", (e) => {
 
   if (e.target.matches("[data-remove]")) {
     removeBook(listItem.getAttribute("data-index"));
+  } else if (e.target.matches("[data-toggle]")) {
+    toggleReadStatus(listItem.getAttribute("data-index"));
   }
 });
 
@@ -39,11 +41,14 @@ function displayBooks() {
     listItem.setAttribute("data-index", index);
     const removeBtn = document.createElement("button");
     removeBtn.setAttribute("data-remove", "");
+    const toggleBtn = document.createElement("button");
+    toggleBtn.setAttribute("data-toggle", "");
 
-    listItem.textContent = `${book.title} by ${book.author}, ${book.pages} pages ${book.status ? "Read" : "Not read yet"}`;
+    listItem.textContent = `${book.title} by ${book.author}, ${book.pages} pages.`;
     removeBtn.textContent = "Remove";
+    toggleBtn.textContent = `${book.status ? "Read" : "Not read yet"}`;
 
-    listItem.appendChild(removeBtn);
+    listItem.append(toggleBtn, removeBtn);
     bookList.appendChild(listItem);
   });
 }
@@ -76,4 +81,10 @@ function clearBookList() {
 function refreshBookList() {
   clearBookList();
   displayBooks();
+}
+
+function toggleReadStatus(index) {
+  myLibrary[index].status = !myLibrary[index].status;
+
+  refreshBookList();
 }
