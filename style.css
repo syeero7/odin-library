@@ -1,0 +1,124 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --ff: Arial, Helvetica, sans-serif;
+  --fs: clamp(1rem, 0.8rem + 0.5vh, 3rem);
+
+  --red: #682728;
+  --cream: #f2e8cf;
+  --white: #f5f5f5;
+  --green: #004700;
+  --gray: #383d43;
+}
+
+body {
+  font-family: var(--ff);
+  line-height: 1.5;
+  font-size: var(--fs);
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  align-items: center;
+  background-color: var(--cream);
+}
+
+main {
+  width: min(90%, 500px);
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: var(--white);
+  padding: 1rem;
+}
+
+button {
+  font: inherit;
+  border: none;
+  padding: 0.4em 1.5em;
+  border-radius: 5px;
+  color: var(--white);
+  font-weight: 700;
+}
+
+#new-book {
+  margin: 10% 0 0 -50%;
+  background-color: var(--green);
+}
+
+#bookList {
+  list-style: none;
+  overflow: auto;
+}
+
+dialog {
+  margin: auto;
+  width: min(80%, 400px);
+  height: 50vh;
+  position: relative;
+}
+
+#close-btn {
+  position: absolute;
+  right: 0;
+  margin: 0.5rem 0.5rem 10%;
+  align-self: end;
+  background-color: var(--red);
+  border-radius: 50%;
+  padding: 1em 1.4em;
+}
+
+dialog > form {
+  margin: 20% auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.input {
+  width: 40%;
+}
+
+form > button {
+  margin-top: 10%;
+  align-self: center;
+  background-color: var(--green);
+  width: 60%;
+}
+
+[data-index] {
+  display: grid;
+  gap: 5px;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-areas:
+    "bookInfo bookInfo"
+    "toggleBtn removeBtn";
+  border-bottom: 2px solid var(--gray);
+  padding-top: 1rem;
+}
+
+[data-index] > p {
+  grid-area: bookInfo;
+}
+
+[data-remove] {
+  grid-area: removeBtn;
+  background-color: var(--red);
+}
+
+[data-toggle] {
+  grid-area: toggleBtn;
+  background-color: transparent;
+  color: var(--green);
+  border: 4px solid var(--green);
+}
