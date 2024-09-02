@@ -13,6 +13,13 @@ const myLibrary = [
 newBookBtn.addEventListener("click", () => dialog.showModal());
 closeBtn.addEventListener("click", () => dialog.close());
 form.addEventListener("submit", getUserInput);
+bookList.addEventListener("click", (e) => {
+  const listItem = e.target.parentElement;
+
+  if (e.target.matches("[data-remove]")) {
+    removeBook(listItem.getAttribute("data-index"));
+  }
+});
 
 function Book(title, author, pages, status) {
   this.title = title;
@@ -29,7 +36,14 @@ function addBookToLibrary(title, author, pages, status) {
 function displayBooks() {
   myLibrary.forEach((book, index) => {
     const listItem = document.createElement("li");
+    listItem.setAttribute("data-index", index);
+    const removeBtn = document.createElement("button");
+    removeBtn.setAttribute("data-remove", "");
+
     listItem.textContent = `${book.title} by ${book.author}, ${book.pages} pages ${book.status ? "Read" : "Not read yet"}`;
+    removeBtn.textContent = "Remove";
+
+    listItem.appendChild(removeBtn);
     bookList.appendChild(listItem);
   });
 }
@@ -44,4 +58,22 @@ function getUserInput(e) {
 
   addBookToLibrary(title, author, pages, status);
   form.reset();
+  refreshBookList();
+}
+
+function removeBook(index) {
+  myLibrary.splice(index, 1);
+
+  refreshBookList();
+}
+
+function clearBookList() {
+  while (bookList.firstChild) {
+    bookList.firstChild.remove();
+  }
+}
+
+function refreshBookList() {
+  clearBookList();
+  displayBooks();
 }
