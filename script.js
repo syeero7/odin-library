@@ -8,7 +8,10 @@ class Book {
 }
 
 class Library {
-  #library = [];
+  #library;
+  constructor() {
+    this.#library = [];
+  }
 
   addBook(book) {
     this.#library.push(book);
@@ -29,7 +32,7 @@ class Library {
 }
 
 const library = new Library();
-const bookList = document.querySelector("#bookList");
+const bookList = document.querySelector("#bookTable");
 const newBookBtn = document.querySelector("#new-book");
 const dialog = document.querySelector("dialog");
 const closeBtn = dialog.querySelector("#close-btn");
@@ -39,21 +42,29 @@ function displayBooks() {
   const myLibrary = library.getBooks();
 
   myLibrary.forEach((book, index) => {
-    const listItem = document.createElement("li");
-    listItem.setAttribute("data-index", index);
+    const tableRow = document.createElement("tr");
+    tableRow.setAttribute("data-index", index);
     const removeBtn = document.createElement("button");
     removeBtn.setAttribute("data-remove", "");
     const toggleBtn = document.createElement("button");
     toggleBtn.setAttribute("data-toggle", "");
-    const para = document.createElement("p");
-    const lineBreak = document.createElement("br");
+    const title = document.createElement("td");
+    const author = document.createElement("td");
+    const pages = document.createElement("td");
+    const dataToggleBtn = document.createElement("td");
+    const dataRemoveBtn = document.createElement("td");
+    dataRemoveBtn.classList.add("del-book");
 
-    para.textContent = `${book.title} by ${book.author}, ${book.pages} pages.`;
-    removeBtn.textContent = "Remove";
-    toggleBtn.textContent = `${book.status ? "Read" : "Not read yet"}`;
+    title.textContent = book.title;
+    author.textContent = book.author;
+    pages.textContent = book.pages;
+    removeBtn.textContent = "×";
+    toggleBtn.textContent = `${book.status ? "Read" : "Unread"}`;
 
-    listItem.append(para, lineBreak, toggleBtn, removeBtn);
-    bookList.appendChild(listItem);
+    dataToggleBtn.appendChild(toggleBtn);
+    dataRemoveBtn.appendChild(removeBtn);
+    tableRow.append(title, author, pages, dataToggleBtn, dataRemoveBtn);
+    bookList.appendChild(tableRow);
   });
 }
 
@@ -96,7 +107,7 @@ newBookBtn.addEventListener("click", () => dialog.showModal());
 closeBtn.addEventListener("click", () => dialog.close());
 form.addEventListener("submit", getUserInput);
 bookList.addEventListener("click", (e) => {
-  const index = e.target.parentElement.getAttribute("data-index");
+  const index = e.target.parentElement.parentElement.getAttribute("data-index");
 
   if (e.target.matches("[data-remove]")) {
     removeBook(index);
