@@ -1,44 +1,48 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css" />
     <script src="./script.js" defer></script>
   </head>
   <body>
     <main>
-      <button type="button" id="new-book" class="btn">New Book</button>
+      <button type="button" class="btn new-book">New Book</button>
       <dialog>
-        <button type="button" id="close-btn">&times;</button>
-        <form action="#">
-          <p>
-            <label for="title">Title :</label>
-            <input class="input" type="text" id="title" required autofocus>
-          </p>
-          <p>
-            <label for="author">Author :</label>
-            <input class="input" type="text" id="author" required>
-          </p>
-          <p>
-            <label for="pages">Number of pages :</label>
-            <input class="input" max="99999" type="number" id="pages" required>
-          </p>
-          <p>
-            <label for="read-status">Read ?</label>
-            <input id="read-status" type="checkbox">
-          </p>
-          <button type="submit" class="btn">Add</button>
-        </form>
+        <div class="form-container">
+          <div>
+            <button type="button" class="close-btn">&times;</button>
+          </div>
+          <form action="#">
+            <p>
+              <label for="title">Title</label>
+              <input class="input" type="text" id="title" required autofocus />
+            </p>
+            <p>
+              <label for="author">Author</label>
+              <input class="input" type="text" id="author" required />
+            </p>
+            <p>
+              <label for="pages">Number of pages</label>
+              <input class="input" max="99999" type="number" id="pages" required />
+            </p>
+            <p>
+              <label for="read-status">Read ?</label>
+              <input id="read-status" type="checkbox" />
+            </p>
+            <button type="submit" class="btn">Add</button>
+          </form>
+        </div>
       </dialog>
       <table>
         <colgroup>
-          <col>
-          <col>
-          <col>
-          <col>
-          <col>
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
         </colgroup>
         <thead>
           <tr>
@@ -49,7 +53,7 @@
             <td>&nbsp;</td>
           </tr>
         </thead>
-        <tbody id="bookTable"></tbody>
+        <tbody class="bookTable"></tbody>
       </table>
     </main>
   </body>
