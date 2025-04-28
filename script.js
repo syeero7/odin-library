@@ -1,5 +1,6 @@
 class Book {
   constructor(title, author, pages, status) {
+    this.id = crypto.randomUUID();
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -9,6 +10,7 @@ class Book {
 
 class Library {
   #library;
+
   constructor() {
     this.#library = [];
   }
@@ -17,12 +19,12 @@ class Library {
     this.#library.push(book);
   }
 
-  removeBook(index) {
-    this.#library.splice(index, 1);
+  removeBook(id) {
+    this.#library = this.#library.filter((book) => id !== book.id);
   }
 
-  toggleStatus(index) {
-    const book = this.#library[index];
+  toggleStatus(id) {
+    const book = this.#library.find((book) => id === book.id);
     book.status = !book.status;
   }
 
@@ -32,29 +34,34 @@ class Library {
 }
 
 const library = new Library();
-const bookList = document.querySelector("#bookTable");
-const newBookBtn = document.querySelector("#new-book");
+const bookList = document.querySelector(".bookTable");
+const newBookBtn = document.querySelector(".new-book");
 const dialog = document.querySelector("dialog");
-const closeBtn = dialog.querySelector("#close-btn");
+const closeBtn = dialog.querySelector(".close-btn");
 const form = dialog.querySelector("form");
+
+newBookBtn.addEventListener("click", () => dialog.showModal());
+closeBtn.addEventListener("click", () => dialog.close());
+form.addEventListener("submit", getUserInput);
+bookList.addEventListener("click", handleClick);
 
 function displayBooks() {
   const myLibrary = library.getBooks();
 
-  myLibrary.forEach((book, index) => {
+  myLibrary.forEach((book) => {
     const tableRow = document.createElement("tr");
-    tableRow.setAttribute("data-index", index);
     const removeBtn = document.createElement("button");
-    removeBtn.setAttribute("data-remove", "");
     const toggleBtn = document.createElement("button");
-    toggleBtn.setAttribute("data-toggle", "");
     const title = document.createElement("td");
     const author = document.createElement("td");
     const pages = document.createElement("td");
     const dataToggleBtn = document.createElement("td");
     const dataRemoveBtn = document.createElement("td");
-    dataRemoveBtn.classList.add("del-book");
 
+    tableRow.dataset.id = book.id;
+    removeBtn.dataset.remove = "";
+    toggleBtn.dataset.toggle = "";
+    dataRemoveBtn.classList.add("del-book");
     title.textContent = book.title;
     author.textContent = book.author;
     pages.textContent = book.pages;
@@ -71,9 +78,9 @@ function displayBooks() {
 function getUserInput(e) {
   e.preventDefault();
 
-  const title = form.querySelector("#title").value;
-  const author = form.querySelector("#author").value;
-  const pages = form.querySelector("#pages").value;
+  const title = form.querySelector("#title").value.trim();
+  const author = form.querySelector("#author").value.trim();
+  const pages = form.querySelector("#pages").value.trim();
   const status = form.querySelector("#read-status").checked ? true : false;
 
   const book = new Book(title, author, pages, status);
@@ -93,26 +100,18 @@ function refreshDisplay() {
   displayBooks();
 }
 
-function removeBook(index) {
-  library.removeBook(index);
+function removeBook(id) {
+  library.removeBook(id);
   refreshDisplay();
 }
 
-function toggleReadStatus(index) {
-  library.toggleStatus(index);
+function toggleReadStatus(id) {
+  library.toggleStatus(id);
   refreshDisplay();
 }
 
-newBookBtn.addEventListener("click", () => dialog.showModal());
-closeBtn.addEventListener("click", () => dialog.close());
-form.addEventListener("submit", getUserInput);
-bookList.addEventListener("click", (e) => {
-  const index = e.target.parentElement.parentElement.getAttribute("data-index");
-
-  if (e.target.matches("[data-remove]")) {
-    removeBook(index);
-  }
-  if (e.target.matches("[data-toggle]")) {
-    toggleReadStatus(index);
-  }
-});
+function handleClick(e) {
+  const id = e.target.closest("tr").dataset.id;
+  if (e.target.matches("[data-remove]")) removeBook(id);
+  if (e.target.matches("[data-toggle]")) toggleReadStatus(id);
+}
