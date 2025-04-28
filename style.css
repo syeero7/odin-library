@@ -1,20 +1,15 @@
-*,
-*::after,
-*::before {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 :root {
-  --ff: Arial, Helvetica, sans-serif;
-  --fs: clamp(1rem, 0.8rem + 0.5vh, 3rem);
+  --ff: Tahoma, Geneva, Verdana, sans-serif;
 
-  --red: #682728;
-  --cream: #f2e8cf;
+  --red: #a32628;
   --white: #f5f5f5;
-  --green: #004700;
-  --gray: #383d43;
+  --green: #0a830a;
   --black: #333;
 
   --border: 2px solid var(--black);
@@ -23,24 +18,28 @@
 body {
   font-family: var(--ff);
   line-height: 1.5;
-  font-size: var(--fs);
   display: flex;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
   align-items: center;
-  background-color: var(--cream);
+  background-color: hsl(from var(--white) h s 90%);
+}
+
+button {
+  cursor: pointer;
 }
 
 main {
-  width: min(90%, 500px);
-  height: 90vh;
+  min-height: 700px;
   display: flex;
   align-items: center;
   justify-content: start;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1em;
   background-color: var(--white);
-  padding: 1rem;
+  padding: 1em;
+  border-radius: 6px;
+  box-shadow: 4px 4px 5px hsla(from var(--black) h s l / 0.1);
 }
 
 .btn {
@@ -52,8 +51,9 @@ main {
   font-weight: 700;
 }
 
-#new-book {
-  margin: 10% 0 0 -50%;
+.new-book {
+  margin-block: 1em;
+  margin-inline: 0.5em auto;
   background-color: var(--green);
 }
 
@@ -70,23 +70,67 @@ td {
 
 dialog {
   margin: auto;
-  width: min(80%, 400px);
-  height: 50vh;
-  position: relative;
 }
 
-#close-btn {
-  align-self: end;
+.close-btn {
   background-color: var(--red);
   border-radius: 50%;
   border: none;
   color: var(--white);
   font-size: 1.5em;
   font-weight: 700;
-  margin: 0.5rem 0.5rem 10%;
-  padding: 0 0.25em;
-  position: absolute;
-  right: 0;
+  width: 32px;
+  height: 32px;
+}
+
+div:has(.close-btn) {
+  min-height: 48px;
+  display: flex;
+  padding: 0.5em;
+  justify-content: end;
+}
+
+.form-container {
+  min-width: 350px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+
+  & form {
+    display: grid;
+    padding: 1em;
+    gap: 0.6em;
+
+    & button {
+      margin-inline: auto;
+      margin-top: 1.5em;
+      align-self: center;
+      background-color: var(--green);
+      width: 50%;
+      padding-block: 0.75em;
+    }
+  }
+
+  & form p {
+    &:first-child,
+    &:nth-child(2),
+    &:nth-child(3) {
+      display: grid;
+    }
+  }
+}
+
+input[type="text"] {
+  min-width: 300px;
+}
+
+input {
+  padding: 5px;
+  font-size: 1.5em;
+}
+
+input[type="checkbox"] {
+  margin-left: 1em;
 }
 
 dialog > form {
@@ -101,13 +145,6 @@ dialog > form {
   width: 40%;
 }
 
-form > button {
-  margin-top: 10%;
-  align-self: center;
-  background-color: var(--green);
-  width: 60%;
-}
-
 td > button {
   border: none;
   width: 100%;
@@ -119,20 +156,32 @@ td > button {
 .del-book {
   background-color: var(--red);
   color: var(--white);
+
+  & button {
+    color: var(--white);
+    font-weight: 700;
+    padding: 0.2em 0.5em;
+  }
 }
 
-.del-book > button {
-  color: var(--white);
-  font-weight: 700;
-  padding: 0.2em 0.5em;
+colgroup > col {
+  &:first-child,
+  &:nth-child(2) {
+    min-width: 50ch;
+  }
+
+  &:nth-child(3),
+  &:nth-child(4) {
+    min-width: 100px;
+  }
+
+  &:last-child {
+    width: 48px;
+  }
+
+  overflow-y: auto;
 }
 
-colgroup > col:last-child {
-  width: 30px;
-}
-
-colgroup > col:first-child,
-colgroup > col:nth-child(2),
-colgroup > col:nth-last-child(2) {
-  width: 100px;
+thead td {
+  border-color: transparent;
 }
